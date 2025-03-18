@@ -1,4 +1,4 @@
-package ru.totalexx.work_service;
+package ru.totalexx.workservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

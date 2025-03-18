@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.totalexx</groupId>
-	<artifactId>work-service</artifactId>
+	<artifactId>workservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>work-service</name>
 	<description>Demo project for Spring Boot</description>
