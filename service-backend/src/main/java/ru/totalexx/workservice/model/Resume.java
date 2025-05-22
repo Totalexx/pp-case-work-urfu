@@ -13,5 +13,8 @@ public class Resume extends AbstractModel {
     private User user;
 
     @Column
+    private String name;
+
+    @Column
     private String text;
 }

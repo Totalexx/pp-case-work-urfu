@@ -18,6 +18,9 @@ public class Notification extends AbstractModel {
     private User owner;
 
     @Column
+    private boolean isRead;
+
+    @Column
     @CreationTimestamp
     private LocalDateTime timestamp;
 }

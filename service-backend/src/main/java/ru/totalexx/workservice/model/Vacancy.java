@@ -18,6 +18,12 @@ public class Vacancy extends AbstractModel {
     private String location;
 
     @Column
+    private Integer salary;
+
+    @Column
+    private Integer workingHours;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private VacancyStatus status;
 
