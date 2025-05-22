@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.model.mapper;
 
+import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import ru.totalexx.workservice.web.api.model.response.vacancy.VacancyListRespons
 
 import java.util.List;
 
+@DecoratedWith(VacancyMapperDecorator.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VacancyMapper {
     VacancyFilter toFilter(GetFilteredVacancyRequest request);

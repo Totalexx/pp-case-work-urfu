@@ -1,11 +1,19 @@
 package ru.totalexx.workservice.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.totalexx.workservice.model.enums.VacancyStatus;
 
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vacancy extends AbstractModel {
 
     @Column

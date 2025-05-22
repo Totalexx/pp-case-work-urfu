@@ -1,11 +1,16 @@
 package ru.totalexx.workservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.totalexx.workservice.model.Vacancy;
+import ru.totalexx.workservice.repository.model.VacancyFilter;
 
 @Repository
-public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
+public interface VacancyRepository extends JpaRepository<Vacancy, Long>, JpaSpecificationExecutor<Vacancy> {
 }
 
 

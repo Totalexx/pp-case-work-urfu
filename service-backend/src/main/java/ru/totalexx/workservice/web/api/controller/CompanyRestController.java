@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class CompanyRestController {
     private final CompanyMapper companyMapper;
 
     @PostMapping("create")
-    public ResponseEntity<Void> create(CreateCompanyRequest request) {
+    public ResponseEntity<Void> create(@Valid CreateCompanyRequest request) {
         Company entity = companyMapper.toEntity(request);
         companyService.create(entity);
 

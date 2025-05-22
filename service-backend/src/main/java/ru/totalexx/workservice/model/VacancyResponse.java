@@ -1,10 +1,18 @@
 package ru.totalexx.workservice.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.totalexx.workservice.model.enums.ResponseStatus;
 import ru.totalexx.workservice.model.enums.VacancyStatus;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class VacancyResponse extends AbstractModel {
 
     @ManyToOne

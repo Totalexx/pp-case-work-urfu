@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ResumeRestController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Void> create(CreateResumeRequest request) {
+    public ResponseEntity<Void> create(@Valid CreateResumeRequest request) {
         Resume resume = resumeMapper.toEntity(request);
         resumeService.create(resume);
 
@@ -42,7 +43,7 @@ public class ResumeRestController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Void> update(UpdateResumeRequest request) {
+    public ResponseEntity<Void> update(@Valid UpdateResumeRequest request) {
         Resume resume = resumeMapper.toEntity(request);
         resumeService.update(resume);
 

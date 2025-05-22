@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class VacancyRestController {
     private final VacancyMapper vacancyMapper;
 
     @GetMapping("get/filter")
-    public VacancyListResponse getVacancies(GetFilteredVacancyRequest request) {
+    public VacancyListResponse getVacancies(@Valid GetFilteredVacancyRequest request) {
         VacancyFilter filter = vacancyMapper.toFilter(request);
         vacancyService.getAll(filter);
         return vacancyMapper.toResponse(vacancyService.getAll(filter));
@@ -35,14 +36,14 @@ public class VacancyRestController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Void> createVacancy(CreateVacancyRequest request) {
+    public ResponseEntity<Void> createVacancy(@Valid CreateVacancyRequest request) {
         Vacancy vacancy = vacancyMapper.toEntity(request);
         vacancyService.create(vacancy);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("response/add")
-    public ResponseEntity<Void> addResponse(AddVacancyResponseRequest request) {
+    public ResponseEntity<Void> addResponse(@Valid AddVacancyResponseRequest request) {
         VacancyResponse vacancyResponse = vacancyMapper.toEntity(request);
         vacancyService.addResponse(vacancyResponse);
 

@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class UserRestController {
     private final UserMapper userMapper;
 
     @PostMapping()
-    public ResponseEntity<Void> create(CreateUserRequest request) {
+    public ResponseEntity<Void> create(@Valid CreateUserRequest request) {
         User entity = userMapper.toEntity(request);
         userService.create(entity);
 
@@ -29,7 +30,7 @@ public class UserRestController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateProfile(UpdateUserProfileRequest request) {
+    public ResponseEntity<Void> updateProfile(@Valid UpdateUserProfileRequest request) {
         return ResponseEntity.ok().build();
     }
 }

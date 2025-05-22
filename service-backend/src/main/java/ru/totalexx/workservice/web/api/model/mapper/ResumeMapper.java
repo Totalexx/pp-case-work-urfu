@@ -12,7 +12,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResumeMapper {
-    ResumeListResponse toResponseList(List<Resume> resumes);
+    default ResumeListResponse toResponseList(List<Resume> resumes) {
+        return new ResumeListResponse(resumes.stream()
+                .map(this::toResponse)
+                .toList());
+    }
 
     ResumeResponse toResponse(Resume resume);
 
