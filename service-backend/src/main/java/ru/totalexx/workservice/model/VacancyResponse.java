@@ -1,6 +1,7 @@
 package ru.totalexx.workservice.model;
 
 import jakarta.persistence.*;
+import ru.totalexx.workservice.model.enums.ResponseStatus;
 import ru.totalexx.workservice.model.enums.VacancyStatus;
 
 @Entity
@@ -16,7 +17,7 @@ public class VacancyResponse extends AbstractModel {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private VacancyStatus status;
+    private ResponseStatus status;
 
     @OneToOne(mappedBy = "response")
     private Chat chat;
