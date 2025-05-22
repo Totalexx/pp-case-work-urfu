@@ -18,6 +18,6 @@ public class VacancyResponse extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private VacancyStatus status;
 
-    @OneToOne(mappedBy = "chat_id")
+    @OneToOne(mappedBy = "response")
     private Chat chat;
 }

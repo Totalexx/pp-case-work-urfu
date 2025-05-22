@@ -21,7 +21,4 @@ public class User extends AbstractModel {
 
     @OneToOne(fetch = FetchType.EAGER)
     private UserProfile profile;
-
-    @OneToMany(mappedBy = "owner_id")
-    private Set<Rating> ratings;
 }

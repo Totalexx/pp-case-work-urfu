@@ -14,9 +14,9 @@ public class Company extends AbstractModel {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "company_id")
+    @OneToMany(mappedBy = "company")
     private Set<Vacancy> vacancies;
 
-    @OneToMany(mappedBy = "owner_id")
+    @OneToMany(mappedBy = "company")
     private Set<Rating> ratings;
 }

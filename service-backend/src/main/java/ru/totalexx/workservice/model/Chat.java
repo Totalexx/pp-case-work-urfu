@@ -1,6 +1,7 @@
 package ru.totalexx.workservice.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -16,8 +17,9 @@ public class Chat extends AbstractModel {
     private User student;
 
     @OneToOne
+    @JoinColumn(name = "response_id")
     private VacancyResponse response;
 
-    @OneToMany(mappedBy = "chat_id")
+    @OneToMany(mappedBy = "chat")
     private Set<Message> messages;
 }

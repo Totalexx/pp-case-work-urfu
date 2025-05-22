@@ -1,8 +1,6 @@
 package ru.totalexx.workservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table
@@ -14,4 +12,7 @@ public class UserProfile extends AbstractModel {
     private String middleName;
     @Column
     private String lastName;
+
+    @OneToOne(mappedBy = "profile")
+    private User user;
 }

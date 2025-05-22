@@ -31,6 +31,6 @@ public class Vacancy extends AbstractModel {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "vacancy_id")
+    @OneToMany(mappedBy = "vacancy")
     private Set<VacancyResponse> responses;
 }
