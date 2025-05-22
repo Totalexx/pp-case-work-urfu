@@ -1,77 +1,40 @@
 <template>
+    <ResumeSelectModal v-if="selectedVacancyId" @selected="respondToVacancy" @close="selectedVacancyId = null" />
     <h1 class="mb-4">Вакансии</h1>
-
     <div class="row vacancy-search-container align-content-start">
         <div class="vacancy-container col-8">
-            <div class="vacancy box">
-                <h2 class="vacancy-title mb-3 mt-0">Специалист по разработке программного комплекса для управления МРТ</h2>
-                <p class="mb-1 vacancy-salary">120 000₽</p>
-                <p class="mb-1">ООО Научный подход</p>
-                <p>Ростов-на-Дону</p>
-                <p class="mb-4">
-                    Участвовать в разработке нового Android-приложения с нуля на языке Java. Реализовывать пользовательский интерфейс на основе готовых макетов в Figma.
-                    Базовые знания языка программирования Java. Понимание основных принципов разработки под Android. Знакомство с основами UI/UX дизайна и умение работать...
-                </p>
-                <a href="" class="primary-button me-2">Откликнуться</a>
-                <router-link to="/vacancy/123" class="secondary-button mb-1">Подробнее</router-link>
+            <div v-for="vacancy in vacancies" :key="vacancy.id" class="vacancy box">
+                <h2 class="vacancy-title mb-3 mt-0">{{ vacancy.title }}</h2>
+                <p class="mb-1 vacancy-salary">{{ vacancy.salary }}₽</p>
+                <p class="mb-1">{{ vacancy.company.name }}</p>
+                <p>{{ vacancy.location }}</p>
+                <p class="mb-4">{{ vacancy.description }}</p>
+                <a class="primary-button me-2" @click="openResumeSelect(vacancy.id)">Откликнуться</a>
+                <router-link :to="`/vacancy/${vacancy.id}`" class="secondary-button mb-1">Подробнее</router-link>
             </div>
-            <div class="vacancy box ">
-                <h2 class="vacancy-title mb-3 mt-0">Frontend-разработчик</h2>
-                <p class="mb-1">ООО Веб Решения</p>
-                <p>Москва</p>
-                <p class="mb-4">
-                    Разработка пользовательских интерфейсов на Vue.js. Интеграция с REST API. Оптимизация производительности веб-приложений.
-                    Знание JavaScript, HTML, CSS. Опыт работы с Vue.js и понимание принципов SPA.
-                </p>
-                <a href="" class="primary-button me-2">Откликнуться</a>
-                <a href="" class="secondary-button mb-1">Подробнее</a>
-            </div>
-            <div class="vacancy box ">
-                <h2 class="vacancy-title mb-3 mt-0">Backend-разработчик</h2>
-                <p class="mb-1">ООО Технологии Будущего</p>
-                <p>Санкт-Петербург</p>
-                <p class="mb-4">
-                    Разработка серверной части приложений на Node.js. Проектирование и реализация REST API. Работа с базами данных (PostgreSQL, MongoDB).
-                    Опыт работы с Node.js, знание TypeScript, понимание принципов работы с базами данных.
-                </p>
-                <a href="" class="primary-button me-2">Откликнуться</a>
-                <a href="" class="secondary-button mb-1">Подробнее</a>
-            </div>
-            <div class="vacancy box ">
-                <h2 class="vacancy-title mb-3 mt-0">UI/UX дизайнер</h2>
-                <p class="mb-1">ООО Дизайн Лаб</p>
-                <p>Екатеринбург</p>
-                <p class="mb-4">
-                    Создание макетов интерфейсов в Figma. Проведение исследований пользовательского опыта. Разработка дизайн-систем.
-                    Опыт работы с Figma, знание основ UI/UX дизайна, умение работать с прототипами.
-                </p>
-                <a href="" class="primary-button me-2">Откликнуться</a>
-                <a href="" class="secondary-button mb-1">Подробнее</a>
-            </div>
-
         </div>
         <div class="vacancy-filter col-3">
             <div class="box mb-3">
                 <h5 class="mb-3 fw-bold">Фильтр вакансий</h5>
                 <div class="mb-3">
                     <label for="filter-title" class="form-label fw-normal">Название</label>
-                    <input id="filter-title" v-model="filterTitle" type="text" class="input" placeholder="Например, Java">
+                    <input id="filter-title" v-model="filterTitle" type="text" class="input" placeholder="Например, Java" />
                 </div>
                 <div class="mb-3">
                     <div class="d-flex gap-2">
                         <div>
                             <label for="filter-salary" class="form-label fw-normal">Зарплата от</label>
-                            <input id="filter-salary" v-model="filterSalary" type="number" class="input" placeholder="от">
+                            <input id="filter-salary" v-model="filterSalary" type="number" class="input" placeholder="от" />
                         </div>
                         <div>
                             <label for="filter-salary-to" class="form-label fw-normal">Зарплата до</label>
-                            <input id="filter-salary-to" v-model="filterSalaryTo" type="number" class="input" placeholder="до">
+                            <input id="filter-salary-to" v-model="filterSalaryTo" type="number" class="input" placeholder="до" />
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="filter-location" class="form-label fw-normal">Локация</label>
-                    <input id="filter-location" v-model="filterLocation" type="text" class="input" placeholder="Екатеринбург">
+                    <input id="filter-location" v-model="filterLocation" type="text" class="input" placeholder="Екатеринбург" />
                 </div>
                 <a class="primary-button w-100" @click="applyFilter">Применить</a>
             </div>
@@ -80,29 +43,66 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import ResumeSelectModal from '@/components/util/ResumeSelectModal.vue';
+import BackendApiUtils from '@/api/BackendApi.ts';
 
+const vacancies = ref([]);
+const filterTitle = ref('');
+const filterSalary = ref('');
+const filterSalaryTo = ref('');
+const filterLocation = ref('');
+const selectedVacancyId = ref<number | null>(null);
+
+async function loadVacancies() {
+    const filter = {
+        title: filterTitle.value,
+        minSalary: filterSalary.value ? Number(filterSalary.value) : undefined,
+        maxSalary: filterSalaryTo.value ? Number(filterSalaryTo.value) : undefined,
+        locationStarts: filterLocation.value,
+    };
+
+    const response = await BackendApiUtils.Vacancy.getAll(filter);
+    vacancies.value = response.data.vacancies;
+}
+
+onMounted(loadVacancies);
+
+function applyFilter() {
+    loadVacancies();
+}
+
+function openResumeSelect(vacancyId: number) {
+    selectedVacancyId.value = vacancyId;
+}
+
+async function respondToVacancy(resumeId: number) {
+    if (!selectedVacancyId.value) return;
+    await BackendApiUtils.Vacancy.addResponse({ vacancyId: selectedVacancyId.value, resumeId: resumeId });
+    selectedVacancyId.value = null;
+}
 </script>
 
-<style>
-    .vacancy-search-container {
-        height: 100vh;
-    }
+<style scoped>
+.vacancy-search-container {
+    height: 100vh;
+}
 
-    .vacancy-filter {
-        height: fit-content;
-        position: sticky;
-        top: 16px;
-    }
+.vacancy-filter {
+    height: fit-content;
+    position: sticky;
+    top: 16px;
+}
 
-    .vacancy {
-        margin-bottom: 24px;
-    }
+.vacancy {
+    margin-bottom: 24px;
+}
 
-    .vacancy-title {
-        font-weight: bold;
-    }
+.vacancy-title {
+    font-weight: bold;
+}
 
-    .vacancy-salary {
-        font-size: 22px;
-    }
+.vacancy-salary {
+    font-size: 22px;
+}
 </style>

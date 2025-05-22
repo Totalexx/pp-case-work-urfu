@@ -15,6 +15,8 @@ import ru.totalexx.workservice.repository.ResumeRepository;
 import ru.totalexx.workservice.repository.VacancyRepository;
 import ru.totalexx.workservice.web.api.model.request.vacancy.AddVacancyResponseRequest;
 import ru.totalexx.workservice.web.api.model.request.vacancy.CreateVacancyRequest;
+import ru.totalexx.workservice.web.api.model.response.company.CompanyResponse;
+import ru.totalexx.workservice.web.api.model.response.vacancy.VacancyApiResponse;
 
 @Component
 public abstract class VacancyMapperDecorator implements VacancyMapper {
@@ -55,6 +57,27 @@ public abstract class VacancyMapperDecorator implements VacancyMapper {
         return vacancyResponse;
     }
 
+    @Override
+    public VacancyApiResponse toResponse(VacancyResponse response) {
+        if ( response == null ) {
+            return null;
+        }
+
+        VacancyApiResponse vacancyApiResponse = new VacancyApiResponse();
+
+        vacancyApiResponse.setId(response.getId());
+        vacancyApiResponse.setSalary(response.getVacancy().getSalary());
+        vacancyApiResponse.setTitle(response.getVacancy().getTitle());
+        vacancyApiResponse.setDescription(response.getVacancy().getDescription());
+        vacancyApiResponse.setLocation(response.getVacancy().getLocation());
+        vacancyApiResponse.setStatus(response.getStatus());
+        vacancyApiResponse.setWorkingHours(response.getVacancy().getWorkingHours());
+        Company company = companyRepository.findById(response.getVacancy().getCompany().getId())
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND, "Компания не найдена"));
+        vacancyApiResponse.setCompany(new CompanyResponse(company.getName()));
+
+        return vacancyApiResponse;
+    }
 
     @Autowired
     public void setCompanyRepository(CompanyRepository companyRepository) {

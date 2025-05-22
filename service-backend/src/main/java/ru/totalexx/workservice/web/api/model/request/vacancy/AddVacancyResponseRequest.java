@@ -1,6 +1,6 @@
 package ru.totalexx.workservice.web.api.model.request.vacancy;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddVacancyResponseRequest {
-    @NotBlank
+    @NotNull
     private Long vacancyId;
-    @NotBlank
+    @NotNull
     private Long resumeId;
 }

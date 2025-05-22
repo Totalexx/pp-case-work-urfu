@@ -1,6 +1,5 @@
 package ru.totalexx.workservice.web.api.model.mapper;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

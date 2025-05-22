@@ -12,7 +12,11 @@ import ru.totalexx.workservice.web.api.model.mapper.VacancyMapper;
 import ru.totalexx.workservice.web.api.model.request.vacancy.AddVacancyResponseRequest;
 import ru.totalexx.workservice.web.api.model.request.vacancy.CreateVacancyRequest;
 import ru.totalexx.workservice.web.api.model.request.vacancy.GetFilteredVacancyRequest;
+import ru.totalexx.workservice.web.api.model.response.vacancy.VacancyApiResponse;
+import ru.totalexx.workservice.web.api.model.response.vacancy.VacancyApiResponseListResponse;
 import ru.totalexx.workservice.web.api.model.response.vacancy.VacancyListResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/vacancy")
@@ -30,7 +34,7 @@ public class VacancyRestController {
     }
 
     @GetMapping("get/{id}")
-    public VacancyResponse getVacancyById(@PathVariable Long id) {
+    public VacancyApiResponse getVacancyById(@PathVariable Long id) {
         Vacancy vacancy = vacancyService.getById(id);
         return vacancyMapper.toResponse(vacancy);
     }
@@ -42,15 +46,21 @@ public class VacancyRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("response/get/all")
+    public VacancyApiResponseListResponse getVacancyResponses() {
+        List<VacancyResponse> allResponses = vacancyService.getAllResponses();
+        return vacancyMapper.toResponse(allResponses);
+    }
+
     @PostMapping("response/add")
-    public ResponseEntity<Void> addResponse(@Valid AddVacancyResponseRequest request) {
+    public ResponseEntity<Void> addResponse(@Valid @RequestBody AddVacancyResponseRequest request) {
         VacancyResponse vacancyResponse = vacancyMapper.toEntity(request);
         vacancyService.addResponse(vacancyResponse);
 
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("response/delete")
+    @DeleteMapping("response/delete")
     public ResponseEntity<Void> deleteResponse(Long responseId) {
         vacancyService.deleteResponse(responseId);
         return ResponseEntity.ok().build();

@@ -1,6 +1,6 @@
 package ru.totalexx.workservice.web.api.model.request.user;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserProfileRequest {
-    @NotEmpty
+    @NotBlank
     private String firstName;
-    @NotEmpty
+    @NotBlank
     private String middleName;
-    @NotEmpty
+    @NotBlank
     private String lastName;
 }

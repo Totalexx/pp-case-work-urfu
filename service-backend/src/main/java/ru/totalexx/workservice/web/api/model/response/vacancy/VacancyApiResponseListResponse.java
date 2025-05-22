@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VacancyListResponse {
-    private List<VacancyApiResponse> vacancies;
-    private Integer totalPages;
+public class VacancyApiResponseListResponse {
+    private List<VacancyApiResponse> responses;
 }

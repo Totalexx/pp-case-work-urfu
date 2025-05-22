@@ -1,13 +1,11 @@
 package ru.totalexx.workservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
+@Table(name = "chats")
 public class Chat extends AbstractModel {
 
     @OneToOne

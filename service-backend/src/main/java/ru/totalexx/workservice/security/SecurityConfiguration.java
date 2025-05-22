@@ -45,8 +45,13 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/login").permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/api/v1/**").permitAll()
+//                        .requestMatchers("/api/v1/login").permitAll()
+//                        .requestMatchers(
+//                                "/swagger-ui.html",
+//                                "/swagger-ui/**",
+//                                "/v3/api-docs/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginProcessingUrl("/api/v1/login")

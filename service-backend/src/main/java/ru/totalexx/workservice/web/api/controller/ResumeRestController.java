@@ -35,7 +35,7 @@ public class ResumeRestController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Void> create(@Valid CreateResumeRequest request) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateResumeRequest request) {
         Resume resume = resumeMapper.toEntity(request);
         resumeService.create(resume);
 
@@ -43,7 +43,7 @@ public class ResumeRestController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Void> update(@Valid UpdateResumeRequest request) {
+    public ResponseEntity<Void> update(@Valid @RequestBody UpdateResumeRequest request) {
         Resume resume = resumeMapper.toEntity(request);
         resumeService.update(resume);
 

@@ -1,6 +1,15 @@
 <template>
+    <ToastManager ref="toastManager" />
     <router-view/>
 </template>
+
+<script setup lang="ts">
+    import { ref, provide } from 'vue';
+    import ToastManager from './components/util/ToastManager.vue';
+
+    const toastManager = ref();
+    provide('toast', toastManager);
+</script>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');

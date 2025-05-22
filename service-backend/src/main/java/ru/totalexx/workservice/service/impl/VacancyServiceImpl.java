@@ -15,11 +15,15 @@ import ru.totalexx.workservice.repository.VacancyResponseRepository;
 import ru.totalexx.workservice.repository.model.VacancyFilter;
 import ru.totalexx.workservice.repository.specification.VacancySpecification;
 import ru.totalexx.workservice.service.VacancyService;
+import ru.totalexx.workservice.service.util.AuthUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class VacancyServiceImpl implements VacancyService {
 
+    private final AuthUtils authUtils;
     private final VacancyRepository vacancyRepository;
     private final VacancyResponseRepository vacancyResponseRepository;
 
@@ -43,6 +47,11 @@ public class VacancyServiceImpl implements VacancyService {
     public Vacancy getById(Long id) {
         return vacancyRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND, "Вакансия не найдена"));
+    }
+
+    @Override
+    public List<VacancyResponse> getAllResponses() {
+        return vacancyResponseRepository.findAllByResume_User(authUtils.getCurrentUser());
     }
 
     @Override

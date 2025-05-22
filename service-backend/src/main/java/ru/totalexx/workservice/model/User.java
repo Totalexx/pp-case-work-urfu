@@ -1,7 +1,9 @@
 package ru.totalexx.workservice.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,11 +12,13 @@ import ru.totalexx.workservice.model.enums.UserRole;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends AbstractModel implements UserDetails {
 
     @Column
@@ -26,7 +30,7 @@ public class User extends AbstractModel implements UserDetails {
     @Column
     private UserRole role;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile profile;
 
     @Override

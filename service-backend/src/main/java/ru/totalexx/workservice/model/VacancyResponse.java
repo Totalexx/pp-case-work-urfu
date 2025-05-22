@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.totalexx.workservice.model.enums.ResponseStatus;
-import ru.totalexx.workservice.model.enums.VacancyStatus;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "vacancy_responses")
 public class VacancyResponse extends AbstractModel {
 
     @ManyToOne

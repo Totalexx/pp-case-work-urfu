@@ -7,6 +7,7 @@ import ru.totalexx.workservice.model.enums.NotificationType;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "notifications")
 public class Notification extends AbstractModel {
 
     @Column

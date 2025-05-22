@@ -9,6 +9,7 @@ import Profile from "@/components/student/Profile.vue";
 import ResumeEdit from "@/components/student/ResumeEdit.vue";
 import Responses from "@/components/student/Responses.vue";
 import Notifications from "@/components/student/Notifications.vue";
+import BackendApi from "@/api/BackendApi";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,7 +26,8 @@ const router = createRouter({
                 {
                     path: 'vacancy/:id',
                     name: 'Вакансия',
-                    component: Vacancy
+                    component: Vacancy,
+                    props: true,
                 },
                 {
                     path: 'resume',
@@ -38,7 +40,8 @@ const router = createRouter({
                         {
                             path: 'edit/:id',
                             name: 'Редактирование резюме',
-                            component: ResumeEdit
+                            component: ResumeEdit,
+                            props: true,
                         },
                         {
                             path: 'create',
@@ -77,11 +80,21 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     if (typeof to.name === "string") {
-        document.title = to.name
+        document.title = to.name;
     }
-    next();
+
+    if (to.name !== 'Логин' && to.name !== 'Регистрация') {
+        try {
+            await BackendApi.User.isAuthorized();
+            next();
+        } catch (e) {
+            next({ name: 'Логин' });
+        }
+    } else {
+        next();
+    }
 });
 
 export default router

@@ -1,4 +1,4 @@
-package ru.totalexx.workservice.web.api.model.response.resume;
+package ru.totalexx.workservice.web.api.model.response.company;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResumeResponse {
-    private Long id;
+public class CompanyResponse {
     private String name;
-    private String text;
 }

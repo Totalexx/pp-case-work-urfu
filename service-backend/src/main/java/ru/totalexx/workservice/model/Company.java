@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "companies")
 public class Company extends AbstractModel {
 
     @ManyToOne

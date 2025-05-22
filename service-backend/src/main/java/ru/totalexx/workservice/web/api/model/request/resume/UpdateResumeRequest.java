@@ -1,7 +1,7 @@
 package ru.totalexx.workservice.web.api.model.request.resume;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateResumeRequest {
-    @NotBlank
+    @NotNull
     private Long id;
-    @NotEmpty(message = "Название резюме не должно быть пустым")
+
+    @NotBlank(message = "Название резюме не должно быть пустым")
     private String name;
 
-    @NotEmpty(message = "Текст резюме не должен быть пустым")
+    @NotBlank(message = "Текст резюме не должен быть пустым")
     private String text;
 }
