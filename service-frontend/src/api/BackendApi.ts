@@ -31,9 +31,8 @@ class BackendApiUtils {
                 {withCredentials: true, headers: {'Content-Type': 'application/json'}})
         },
         async deleteResponse(id) {
-            return HTTP.delete('api/v1/vacancy/response/delete',
-                {id: id},
-                {withCredentials: true, headers: {'Content-Type': 'application/json'}})
+            return HTTP.delete('api/v1/vacancy/response/delete/' + id,
+                {withCredentials: true})
         }
     }
     Resume = {

@@ -4,24 +4,24 @@
         <div class="col-7" v-for="response in responses" :key="response.id">
             <div class="box d-flex mb-3 flex-column">
                 <div class="w-100">
-          <span
-              class="notification-status mb-2"
-              :class="{
-              'response-status_awaiting': response?.status === 'AWAITING',
-              'response-status_invitation': response.status === 'INVITATION',
-              'response-status_discard': response.status === 'DISCARD'
-            }"
-          >
-            {{
-                  response.status === 'AWAITING'
-                      ? 'В ожидании'
-                      : response.status === 'INVITATION'
-                          ? 'Приглашение'
-                          : 'Отклонён'
-              }}
-          </span>
+                    <span
+                        class="notification-status mb-2"
+                        :class="{
+                            'response-status_awaiting': response?.status === 'AWAITING',
+                            'response-status_invitation': response.status === 'INVITATION',
+                            'response-status_discard': response.status === 'DISCARD'
+                        }"
+                    >
+                        {{
+                            response.status === 'AWAITING'
+                                ? 'В ожидании'
+                                : response.status === 'INVITATION'
+                                    ? 'Приглашение'
+                                    : 'Отклонён'
+                        }}
+                    </span>
                     <h2 class="vacancy-title mb-3 mt-0">{{ response.title || '—' }}</h2>
-                    <p class="mb-1 vacancy-salary">{{ response.salary || '—' }}₽</p>
+                    <p class="mb-1 vacancy-salary">{{ response.salary !== null ? response.salary + '₽' : '—' }}</p>
                     <p class="mb-1">{{ response.company?.name || '—' }}</p>
                     <p>{{ response.location || '—' }}</p>
                     <p class="mb-4">{{ response.description || '—' }}</p>
@@ -30,7 +30,7 @@
                     <a class="secondary-button me-2" title="Чат">
                         <i class="bi bi-chat-dots m-1"></i> Чат
                     </a>
-                    <a class="tertiary-button" title="Удалить">
+                    <a class="tertiary-button" title="Удалить" @click.prevent="deleteResponse(response.id)">
                         <i class="bi bi-trash m-1"></i>Удалить отклик
                     </a>
                 </div>
@@ -45,11 +45,17 @@ import BackendApiUtils from '@/api/BackendApi.ts'
 
 const responses = ref([])
 
-onMounted(async () => {
-    const response = await BackendApiUtils.Vacancy.getAllResponses()
-    responses.value = response.data.responses
-    console.log(responses.value)
-})
+async function load() {
+    const res = await BackendApiUtils.Vacancy.getAllResponses()
+    responses.value = res.data.responses || []
+}
+
+async function deleteResponse(id: number) {
+    await BackendApiUtils.Vacancy.deleteResponse(id)
+    await load()
+}
+
+onMounted(load)
 </script>
 
 <style>

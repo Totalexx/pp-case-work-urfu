@@ -43,9 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, inject} from 'vue';
 import ResumeSelectModal from '@/components/util/ResumeSelectModal.vue';
 import BackendApiUtils from '@/api/BackendApi.ts';
+const toast = inject('toast');
 
 const vacancies = ref([]);
 const filterTitle = ref('');
@@ -62,7 +63,11 @@ async function loadVacancies() {
         locationStarts: filterLocation.value,
     };
 
-    const response = await BackendApiUtils.Vacancy.getAll(filter);
+    const response = await BackendApiUtils.Vacancy.getAll(filter).catch(
+        (e) => {
+            toast?.value?.showToast(e.response.data.message, 'danger');
+        }
+    );
     vacancies.value = response.data.vacancies;
 }
 
@@ -78,7 +83,13 @@ function openResumeSelect(vacancyId: number) {
 
 async function respondToVacancy(resumeId: number) {
     if (!selectedVacancyId.value) return;
-    await BackendApiUtils.Vacancy.addResponse({ vacancyId: selectedVacancyId.value, resumeId: resumeId });
+    await BackendApiUtils.Vacancy.addResponse({ vacancyId: selectedVacancyId.value, resumeId: resumeId })
+        .then(() => {
+            loadVacancies();
+            toast?.value?.showToast('Отклик отправлен!', 'success');
+        }).catch((e) => {
+            toast?.value?.showToast(e.response.data.message, 'danger');
+        });
     selectedVacancyId.value = null;
 }
 </script>

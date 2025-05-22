@@ -9,7 +9,7 @@
                 <p class="vacancy-salary mb-2">{{ vacancy?.salary }}₽</p>
                 <p class="mb-1">{{ vacancy?.workingHours }} часов в день</p>
                 <p>{{ vacancy?.location }}</p>
-                <a href="" class="primary-button">Откликнуться</a>
+                <a href="" class="primary-button" @click.prevent="openModal">Откликнуться</a>
             </div>
             <div class="box mt-4">
                 <h3 class="mb-3">Описание вакансии</h3>
@@ -23,15 +23,20 @@
             </div>
         </div>
     </div>
+
+    <ResumeSelectModal v-if="showModal" @selected="sendResponse" @close="closeModal" />
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import {ref, onMounted, inject} from 'vue'
 import { useRoute } from 'vue-router'
 import BackendApiUtils from '@/api/BackendApi'
+import ResumeSelectModal from '@/components/util/ResumeSelectModal.vue'
 
 const route = useRoute()
+const toast = inject('toast');
 const vacancy = ref<any>(null)
+const showModal = ref(false)
 
 onMounted(async () => {
     try {
@@ -42,19 +47,42 @@ onMounted(async () => {
         console.error('Ошибка загрузки вакансии', e)
     }
 })
+
+function openModal() {
+    showModal.value = true
+}
+
+function closeModal() {
+    showModal.value = false
+}
+
+async function sendResponse(resumeId: number) {
+    showModal.value = false
+    await BackendApiUtils.Vacancy.addResponse({
+        resumeId,
+        vacancyId: vacancy.value.id
+    }).then(
+        () => {
+            toast?.value?.showToast('Отклик отправлен!', 'success')
+        }
+    ).catch((e) => {
+        console.error('Ошибка отправки отклика', e)
+        toast?.value?.showToast(e.response.data.message, 'danger')
+    })
+}
 </script>
 
 <style scoped>
-    .company-info {
-        height: fit-content;
-    }
+.company-info {
+    height: fit-content;
+}
 
-    .company-info_rating {
-        font-size: 20px;
-    }
+.company-info_rating {
+    font-size: 20px;
+}
 
-    .company-info_rating-count {
-        font-size: 16px;
-        margin-left: 14px;
-    }
+.company-info_rating-count {
+    font-size: 16px;
+    margin-left: 14px;
+}
 </style>

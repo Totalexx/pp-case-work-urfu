@@ -60,8 +60,8 @@ public class VacancyRestController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("response/delete")
-    public ResponseEntity<Void> deleteResponse(Long responseId) {
+    @DeleteMapping("response/delete/{responseId}")
+    public ResponseEntity<Void> deleteResponse(@PathVariable Long responseId) {
         vacancyService.deleteResponse(responseId);
         return ResponseEntity.ok().build();
     }
