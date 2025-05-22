@@ -8,12 +8,14 @@ import ru.totalexx.workservice.model.User;
 import ru.totalexx.workservice.model.UserProfile;
 import ru.totalexx.workservice.repository.UserRepository;
 import ru.totalexx.workservice.service.UserService;
+import ru.totalexx.workservice.service.util.AuthUtils;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthUtils authUtils;
 
     @Override
     public void create(User user) {
@@ -33,13 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserProfile getProfile() {
+        return authUtils.getCurrentUser().getProfile();
+    }
+
+    @Override
     public void updateProfile(UserProfile userProfile) {
-        if (userProfile.getId() == null)
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "ID пользователя не может быть пустым");
-
-        User user = userRepository.findById(userProfile.getId())
-                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
-
+        User user = authUtils.getCurrentUser();
         user.setProfile(userProfile);
         userRepository.save(user);
     }

@@ -1,5 +1,6 @@
 package ru.totalexx.workservice.web.api.model.mapper;
 
+import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import ru.totalexx.workservice.model.Resume;
@@ -10,6 +11,7 @@ import ru.totalexx.workservice.web.api.model.response.resume.ResumeResponse;
 
 import java.util.List;
 
+@DecoratedWith(ResumeMapperDecorator.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResumeMapper {
     default ResumeListResponse toResponseList(List<Resume> resumes) {
