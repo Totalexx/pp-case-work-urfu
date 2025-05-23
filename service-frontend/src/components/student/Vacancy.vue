@@ -3,7 +3,7 @@
         ← Назад
     </router-link>
     <div class="row gap-3 align-content-start">
-        <div class="col-7">
+        <div class="col-lg-7 col-12">
             <div class="box">
                 <h1 class="mb-3">{{ vacancy?.title }}</h1>
                 <p class="vacancy-salary mb-2">{{ vacancy?.salary }}₽</p>
@@ -16,10 +16,12 @@
                 <p class="mb-2">{{ vacancy?.description }}</p>
             </div>
         </div>
-        <div class="col-3 box company-info">
-            <h3>{{ vacancy?.company?.name }}</h3>
-            <div class="company-info_rating">
-                4.5 <span style="color: #fdd53f; font-size: 20px;">★ ★ ★ ★ ☆</span><span class="company-info_rating-count">20 отзывов</span>
+        <div class="col-lg-4 col-12">
+            <div class="box company-info">
+                <h3>{{ vacancy?.company?.name }}</h3>
+                <div class="company-info_rating">
+                    4.5 <span style="color: #fdd53f; font-size: 20px;">★ ★ ★ ★ ☆</span><span class="company-info_rating-count">20 отзывов</span>
+                </div>
             </div>
         </div>
     </div>
@@ -73,9 +75,6 @@ async function sendResponse(resumeId: number) {
 </script>
 
 <style scoped>
-.company-info {
-    height: fit-content;
-}
 
 .company-info_rating {
     font-size: 20px;

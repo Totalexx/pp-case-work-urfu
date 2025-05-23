@@ -1,7 +1,7 @@
 <template>
     <h1>Профиль</h1>
     <div class="row mt-4">
-        <div class="col-7">
+        <div class="col-lg-7 col-12">
             <div class="box d-flex mb-3 flex-column">
                 <div class="d-flex align-items-center mb-3">
                     <img

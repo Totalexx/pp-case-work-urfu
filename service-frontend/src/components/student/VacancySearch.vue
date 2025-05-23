@@ -2,18 +2,18 @@
     <ResumeSelectModal v-if="selectedVacancyId" @selected="respondToVacancy" @close="selectedVacancyId = null" />
     <h1 class="mb-4">Вакансии</h1>
     <div class="row vacancy-search-container align-content-start">
-        <div class="vacancy-container col-8">
+        <div class="vacancy-container col-xl-8 col-12 order-1 order-xl-0">
             <div v-for="vacancy in vacancies" :key="vacancy.id" class="vacancy box">
                 <h2 class="vacancy-title mb-3 mt-0">{{ vacancy.title }}</h2>
                 <p class="mb-1 vacancy-salary">{{ vacancy.salary }}₽</p>
                 <p class="mb-1">{{ vacancy.company.name }}</p>
                 <p>{{ vacancy.location }}</p>
                 <p class="mb-4">{{ vacancy.description }}</p>
-                <a class="primary-button me-2" @click="openResumeSelect(vacancy.id)">Откликнуться</a>
+                <a class="primary-button me-2 mb-sm-0 mb-2" @click="openResumeSelect(vacancy.id)">Откликнуться</a>
                 <router-link :to="`/vacancy/${vacancy.id}`" class="secondary-button mb-1">Подробнее</router-link>
             </div>
         </div>
-        <div class="vacancy-filter col-3">
+        <div class="vacancy-filter col-xxl-3 col-xl-4 col-12 order-0 order-xl-1">
             <div class="box mb-3">
                 <h5 class="mb-3 fw-bold">Фильтр вакансий</h5>
                 <div class="mb-3">
@@ -101,7 +101,6 @@ async function respondToVacancy(resumeId: number) {
 
 .vacancy-filter {
     height: fit-content;
-    position: sticky;
     top: 16px;
 }
 

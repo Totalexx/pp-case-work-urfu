@@ -1,7 +1,7 @@
 <template>
     <h1>Уведомления</h1>
     <div class="row mt-4">
-        <div class="col-7">
+        <div class="col-lg-7 col-12">
             <div class="box d-flex mb-3 flex-column">
                 <span class="fs-5 mb-1">
                     Вам пришло новое приглашение

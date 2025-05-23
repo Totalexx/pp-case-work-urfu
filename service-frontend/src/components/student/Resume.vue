@@ -40,7 +40,7 @@ onMounted(() => {
 <template>
     <h1>Мои резюме</h1>
     <div class="row mt-4">
-        <div class="col-7">
+        <div class="col-lg-7 col-12">
             <div
                 v-for="resume in resumes"
                 :key="resume.id"

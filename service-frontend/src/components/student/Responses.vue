@@ -1,7 +1,7 @@
 <template>
     <h1>Мои отклики</h1>
     <div class="row mt-4">
-        <div class="col-7" v-for="response in responses" :key="response.id">
+        <div class="col-lg-7 col-12" v-for="response in responses" :key="response.id">
             <div class="box d-flex mb-3 flex-column">
                 <div class="w-100">
                     <span

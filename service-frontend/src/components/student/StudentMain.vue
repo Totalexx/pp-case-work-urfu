@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid student-main">
         <div class="row">
-            <div class="sidebar col-2">
+            <div class="sidebar col-xxl-2 col-lg-3 col-12">
                 <div class="link-list">
                     <router-link to="/">
                         <div class="sidebar-link">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="main-content col-10">
+            <div class="main-content col-10 col-lg-9 col-12">
                 <router-view></router-view>
             </div>
         </div>

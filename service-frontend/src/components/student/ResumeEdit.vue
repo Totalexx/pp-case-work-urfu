@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
 <template>
     <h1>Редактор резюме</h1>
     <div class="row mt-4">
-        <div class="col-7">
+        <div class="col-lg-7 col-12">
             <div class="box d-flex mb-4 flex-column">
                 <h4>Название резюме</h4>
                 <input
